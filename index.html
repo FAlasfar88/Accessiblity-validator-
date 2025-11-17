@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مدقق معايير الوصول لذوي الاحتياجات الخاصة (مُحدَّث)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* إضافة خط عربي حديث وجعله الخط الأساسي */
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
+        body { 
+            font-family: 'Cairo', sans-serif;
+            background-color: #f7fafc; /* خلفية رمادية فاتحة جداً */
+            direction: rtl; 
+            text-align: right;
+        }
+        /* تحسين شكل الإدخال عند التركيز عليه */
+        input:focus {
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5); /* حلقة زرقاء ناعمة */
+        }
+    </style>
+</head>
+<body class="p-4 min-h-screen">
+    <div class="max-w-3xl mx-auto bg-white p-8 rounded-2xl shadow-2xl mt-10">
+        
+        <header class="text-center mb-10 pb-4 border-b border-gray-100">
+            <h1 class="text-4xl font-extrabold text-blue-800 mb-2">مدقق معايير الوصول الشامل ♿</h1>
+            <p class="text-xl text-gray-600">لتصميم بيئات تخدم الجميع</p>
+        </header>
+
+        <div class="bg-blue-50 p-6 rounded-xl mb-8 border border-blue-200 shadow-md">
+            <h2 class="text-2xl font-bold text-blue-800 mb-4">1. عرض الباب / الممر</h2>
+            <label for="doorWidth" class="block text-base font-medium text-gray-700 mb-2">عرض المدخل الفعلي (سم):</label>
+            <input type="number" id="doorWidth" placeholder="أدخل العرض (مثلاً: 90)" class="w-full p-3 border-2 border-blue-300 rounded-lg text-right transition duration-200 focus:border-blue-500">
+            <button data-check-id="door" class="check-btn mt-5 w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition duration-300 font-semibold shadow-lg">تحقق من عرض الباب</button>
+            <div id="door-result" class="result-display text-center p-3 rounded-lg mt-4 hidden"></div>
+        </div>
+
+        <div class="bg-green-50 p-6 rounded-xl mb-8 border border-green-200 shadow-md">
+            <h2 class="text-2xl font-bold text-green-800 mb-4">2. ميلان المنحدر</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label for="rampHeight" class="block text-base font-medium text-gray-700 mb-2">الارتفاع العمودي الذي سيغطيه المنحدر (سم):</label>
+                    <input type="number" id="rampHeight" placeholder="أدخل الارتفاع (مثلاً: 100)" class="w-full p-3 border-2 border-green-300 rounded-lg text-right transition duration-200 focus:border-green-500">
+                </div>
+                <div>
+                    <label for="rampLength" class="block text-base font-medium text-gray-700 mb-2">الطول الأفقي الفعلي للمنحدر (سم):</label>
+                    <input type="number" id="rampLength" placeholder="أدخل الطول (مثلاً: 1200)" class="w-full p-3 border-2 border-green-300 rounded-lg text-right transition duration-200 focus:border-green-500">
+                </div>
+            </div>
+            
+            <button data-check-id="ramp" class="check-btn mt-5 w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition duration-300 font-semibold shadow-lg">تحقق من ميلان المنحدر</button>
+            <div id="ramp-result" class="result-display text-center p-3 rounded-lg mt-4 hidden"></div>
+        </div>
+
+        <div class="bg-purple-50 p-6 rounded-xl mb-8 border border-purple-200 shadow-md">
+            <h2 class="text-2xl font-bold text-purple-800 mb-4">3. أبعاد دورة المياه المخصصة</h2>
+            <p class="text-sm text-gray-500 mb-4">المعيار الأساسي هو توفير مساحة دوران لا تقل عن دائرة بقطر 150 سم.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label for="restroomLength" class="block text-base font-medium text-gray-700 mb-2">طول دورة المياه الفعلي (سم):</label>
+                    <input type="number" id="restroomLength" placeholder="أدخل الطول (مثلاً: 220)" class="w-full p-3 border-2 border-purple-300 rounded-lg text-right transition duration-200 focus:border-purple-500">
+                </div>
+                <div>
+                    <label for="restroomWidth" class="block text-base font-medium text-gray-700 mb-2">عرض دورة المياه الفعلي (سم):</label>
+                    <input type="number" id="restroomWidth" placeholder="أدخل العرض (مثلاً: 160)" class="w-full p-3 border-2 border-purple-300 rounded-lg text-right transition duration-200 focus:border-purple-500">
+                </div>
+            </div>
+            
+            <button data-check-id="restroom" class="check-btn mt-5 w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition duration-300 font-semibold shadow-lg">تحقق من أبعاد الدوران</button>
+            <div id="restroom-result" class="result-display text-center p-3 rounded-lg mt-4 hidden"></div>
+        </div>
+
+        <div class="bg-yellow-50 p-6 rounded-xl mb-8 border border-yellow-200 shadow-md">
+            <h2 class="text-2xl font-bold text-yellow-800 mb-4">4. أبعاد كابينة المصعد</h2>
+            <p class="text-sm text-gray-500 mb-4">مطلوب 140 سم عمق × 110 سم عرض كحد أدنى.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label for="elevatorDepth" class="block text-base font-medium text-gray-700 mb-2">عمق الكابينة الفعلي (سم):</label>
+                    <input type="number" id="elevatorDepth" placeholder="أدخل العمق (مثلاً: 140)" class="w-full p-3 border-2 border-yellow-300 rounded-lg text-right transition duration-200 focus:border-yellow-500">
+                </div>
+                <div>
+                    <label for="elevatorWidth" class="block text-base font-medium text-gray-700 mb-2">عرض الكابينة الفعلي (سم):</label>
+                    <input type="number" id="elevatorWidth" placeholder="أدخل العرض (مثلاً: 110)" class="w-full p-3 border-2 border-yellow-300 rounded-lg text-right transition duration-200 focus:border-yellow-500">
+                </div>
+            </div>
+            
+            <button data-check-id="elevator" class="check-btn mt-5 w-full bg-yellow-600 text-white py-3 rounded-lg hover:bg-yellow-700 transition duration-300 font-semibold shadow-lg">تحقق من أبعاد المصعد</button>
+            <div id="elevator-result" class="result-display text-center p-3 rounded-lg mt-4 hidden"></div>
+        </div>
+        
+        <footer class="text-center text-sm text-gray-500 pt-6 mt-8 border-t border-gray-100">
+            تم تطوير هذه الأداة كجزء من مشروع الوصول الشامل.
+        </footer>
+
+    </div>
+
+    <script>
+        // ---------------------------------
+        // المنطق المشترك لتحديث النتيجة
+        // ---------------------------------
+        function updateResult(id, message, bgColor, textColor, icon) {
+            const resultElement = document.getElementById(id + '-result');
+            resultElement.className = `result-display text-center p-3 rounded-lg ${bgColor} ${textColor} mt-4`;
+            resultElement.innerHTML = `<span class="text-2xl">${icon}</span> <span class="font-semibold">${message}</span>`;
+            resultElement.classList.remove('hidden');
+        }
+
+        // ---------------------------------
+        // منطق التحقق من عرض الباب
+        // ---------------------------------
+        function checkDoor() {
+            // المعيار: عرض الباب يجب أن يكون 90 سم على الأقل
+            const MIN_WIDTH = 90; 
+            const doorWidth = parseFloat(document.getElementById('doorWidth').value); 
+            const id = 'door';
+
+            if (isNaN(doorWidth) || doorWidth <= 0) {
+                updateResult(id, 'الرجاء إدخال قيمة عرض باب صحيحة وموجبة.', 'bg-yellow-100', 'text-yellow-800', '⚠️');
+                return;
+            } 
+            
+            if (doorWidth >= MIN_WIDTH) {
+                updateResult(id, `✅ مطابق للمعيار! العرض المدخل ${doorWidth} سم أكبر أو يساوي ${MIN_WIDTH} سم.`, 'bg-green-100', 'text-green-800', '👍');
+            } else {
+                const required = MIN_WIDTH - doorWidth;
+                updateResult(id, `❌ غير مطابق للمعيار! العرض المدخل ${doorWidth} سم أقل من المطلوب (${MIN_WIDTH} سم). يجب زيادة العرض بـ ${required.toFixed(2)} سم على الأقل.`, 'bg-red-100', 'text-red-800', '🛑');
+            }
+        }
+
+        // ---------------------------------
+        // منطق التحقق من ميلان المنحدر
+        // ---------------------------------
+        function checkRamp() {
+            // المعيار: نسبة ميلان المنحدر القصوى هي 1:12
+            const MAX_RATIO = 12; 
+            const MAX_HEIGHT_BEFORE_LANDING = 75; 
+            
+            const rampHeight = parseFloat(document.getElementById('rampHeight').value);
+            const rampLength = parseFloat(document.getElementById('rampLength').value);
+            const id = 'ramp';
+            
+            if (isNaN(rampHeight) || isNaN(rampLength) || rampHeight <= 0 || rampLength <= 0) {
+                updateResult(id, 'الرجاء إدخال قيم صحيحة وموجبة للارتفاع والطول الأفقي للمنحدر.', 'bg-yellow-100', 'text-yellow-800', '⚠️');
+                return;
+            }
+
+            const actualRatio = rampLength / rampHeight;
+            const requiredLength = rampHeight * MAX_RATIO;
+            let message = '';
+            let bgColor = '';
+            let textColor = '';
+            let icon = '';
+
+            if (actualRatio >= MAX_RATIO) {
+                message = `✅ مطابق للمعيار! نسبة الميلان الفعلية هي 1:${actualRatio.toFixed(1)}. تفي بالحد الأقصى المطلوب (1:${MAX_RATIO}).`;
+                bgColor = 'bg-green-100';
+                textColor = 'text-green-800';
+                icon = '👍';
+                
+                if (rampHeight > MAX_HEIGHT_BEFORE_LANDING) {
+                    message += `<br><span class="text-sm font-bold text-red-600">⚠️ ملاحظة: الارتفاع يتجاوز ${MAX_HEIGHT_BEFORE_LANDING} سم. يتطلب المنحدر منطقة استراحة (Landing) في المنتصف.</span>`;
+                    bgColor = 'bg-yellow-100'; 
+                    textColor = 'text-yellow-800';
+                    icon = '⚠️';
+                }
+                
+            } else {
+                const ratioText = `1:${actualRatio.toFixed(1)}`;
+                message = `❌ غير مطابق للمعيار! نسبة الميلان الفعلية هي ${ratioText}، وهي شديدة الانحدار.`;
+                message += `<br> لارتفاع ${rampHeight} سم، يجب أن يكون الطول الأفقي للمنحدر لا يقل عن ${requiredLength.toFixed(2)} سم.`;
+                bgColor = 'bg-red-100';
+                textColor = 'text-red-800';
+                icon = '🛑';
+            }
+            
+            updateResult(id, message, bgColor, textColor, icon);
+        }
+
+        // ---------------------------------
+        // منطق التحقق من دورة المياه المخصصة
+        // ---------------------------------
+        function checkRestroom() {
+            // المعيار: مساحة دوران لا تقل عن 150 سم X 150 سم
+            const REQUIRED_DIMENSION = 150; 
+            
+            const restroomLength = parseFloat(document.getElementById('restroomLength').value);
+            const restroomWidth = parseFloat(document.getElementById('restroomWidth').value);
+            const id = 'restroom';
+            
+            if (isNaN(restroomLength) || isNaN(restroomWidth) || restroomLength <= 0 || restroomWidth <= 0) {
+                updateResult(id, 'الرجاء إدخال قيم صحيحة وموجبة للطول والعرض.', 'bg-yellow-100', 'text-yellow-800', '⚠️');
+                return;
+            }
+            
+            let message = '';
+            let bgColor = '';
+            let textColor = '';
+            let icon = '';
+
+            if (restroomLength >= REQUIRED_DIMENSION && restroomWidth >= REQUIRED_DIMENSION) {
+                message = `✅ مطابق للمعيار! المساحة (${restroomLength}x${restroomWidth} سم) توفر مساحة دوران كافية (150x150 سم).`;
+                bgColor = 'bg-green-100';
+                textColor = 'text-green-800';
+                icon = '👍';
+            } else {
+                message = `❌ غير مطابق للمعيار! المساحة (${restroomLength}x${restroomWidth} سم) غير كافية للدوران المطلوب (150x150 سم).`;
+                
+                if (restroomLength < REQUIRED_DIMENSION) {
+                    message += `<br> <span class="font-bold">الطول:</span> مطلوب ${REQUIRED_DIMENSION} سم على الأقل.`;
+                }
+                if (restroomWidth < REQUIRED_DIMENSION) {
+                    message += `<br> <span class="font-bold">العرض:</span> مطلوب ${REQUIRED_DIMENSION} سم على الأقل.`;
+                }
+                
+                bgColor = 'bg-red-100';
+                textColor = 'text-red-800';
+                icon = '🛑';
+            }
+            
+            updateResult(id, message, bgColor, textColor, icon);
+        }
+
+        // ---------------------------------
+        // منطق التحقق من أبعاد المصعد
+        // ---------------------------------
+        function checkElevator() {
+            // المعيار الشائع: 140 سم عمق × 110 سم عرض كحد أدنى (للدوران).
+            const MIN_DEPTH = 140; 
+            const MIN_WIDTH = 110; 
+            
+            const elevatorDepth = parseFloat(document.getElementById('elevatorDepth').value);
+            const elevatorWidth = parseFloat(document.getElementById('elevatorWidth').value);
+            const id = 'elevator';
+            
+            if (isNaN(elevatorDepth) || isNaN(elevatorWidth) || elevatorDepth <= 0 || elevatorWidth <= 0) {
+                updateResult(id, 'الرجاء إدخال قيم صحيحة وموجبة لعمق وعرض كابينة المصعد.', 'bg-yellow-100', 'text-yellow-800', '⚠️');
+                return;
+            }
+            
+            let message = '';
+            let bgColor = '';
+            let textColor = '';
+            let icon = '';
+
+            if (elevatorDepth >= MIN_DEPTH && elevatorWidth >= MIN_WIDTH) {
+                message = `✅ مطابق للمعيار! أبعاد الكابينة (${elevatorDepth}x${elevatorWidth} سم) توفر المساحة الكافية (مطلوب: ${MIN_DEPTH}x${MIN_WIDTH} سم).`;
+                bgColor = 'bg-green-100';
+                textColor = 'text-green-800';
+                icon = '👍';
+            } else {
+                message = `❌ غير مطابق للمعيار! أبعاد الكابينة (${elevatorDepth}x${elevatorWidth} سم) أقل من المطلوب.`;
+                
+                if (elevatorDepth < MIN_DEPTH) {
+                    message += `<br> <span class="font-bold">العمق:</span> مطلوب ${MIN_DEPTH} سم على الأقل.`;
+                }
+                if (elevatorWidth < MIN_WIDTH) {
+                    message += `<br> <span class="font-bold">العرض:</span> مطلوب ${MIN_WIDTH} سم على الأقل.`;
+                }
+                
+                bgColor = 'bg-red-100';
+                textColor = 'text-red-800';
+                icon = '🛑';
+            }
+            
+            updateResult(id, message, bgColor, textColor, icon);
+        }
+
+
+        // ---------------------------------
+        // ربط الأزرار بالدوال
+        // ---------------------------------
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.check-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const checkId = this.getAttribute('data-check-id');
+                    if (checkId === 'door') {
+                        checkDoor();
+                    } else if (checkId === 'ramp') {
+                        checkRamp();
+                    } else if (checkId === 'restroom') {
+                        checkRestroom();
+                    } else if (checkId === 'elevator') {
+                        checkElevator();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
